@@ -1,6 +1,14 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - '*'
+
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -8,11 +16,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 11
+
+      - name: Make Gradle executable
+        run: chmod +x gradlew
 
       - name: Build with Gradle
         run: ./gradlew test
